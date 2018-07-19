@@ -49,3 +49,17 @@ The default release of this script is in asynchronous mode. Simply editing it an
 
 The led hell :).
 It demonstrates how to (efficiently enough) write scripts in a concise manner.
+
+## Other examples
+
+### Key Driven Poppy
+
+A customizable example to drive the motors (Poppy Ergo Jr) or users' scripts with keyboard.
+
+Next to poppy init, if needed, type:
+```
+node key-driven-poppy/start
+````
+then, type h to display available key binding and enjoy :)
+
+Users can easily register their own script modifiyng the keyBinding.js file.
