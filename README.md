@@ -33,11 +33,11 @@ node path_to_script_file
 ```
 to execute them.
 
-## Basic examples
+## Basic Examples
 
 ### basic.js
 
-A true beginner script introducing to script writing.
+A true beginner example introducing to script writing.
 
 ### tetris.js
 
@@ -52,13 +52,13 @@ The default release of this script is in asynchronous mode. Simply editing it an
 The led hell :).
 It demonstrates how to (efficiently enough) write scripts in a concise manner.
 
-## Other examples
+## Other Examples
 
 ### Key Driven Poppy
 
 A customizable example to drive the motors (Poppy Ergo Jr) or users' scripts with keyboard.
 
-Next to poppy init, if needed, type:
+Type:
 ```
 node key-driven-poppy/start
 ````
