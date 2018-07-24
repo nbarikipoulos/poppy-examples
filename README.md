@@ -64,4 +64,4 @@ node key-driven-poppy/start
 ````
 then, type h to display available key binding and enjoy :)
 
-Users can easily register their own script modifiyng the keyBinding.js file.
+Users can easily register their own scripts modifying the keyBinding.js file.
