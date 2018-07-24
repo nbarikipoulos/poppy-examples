@@ -68,6 +68,7 @@ process.stdin.on('keypress', (str, key) => {
             .from(KEYS.values())
             .forEach( elt => console.log(`${elt.key}: ${elt.desc}`) );
         ;
+        console.log('Press CRTL-c to exit.')
 
     } else if ( str === '0') {
 
