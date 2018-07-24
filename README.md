@@ -5,11 +5,11 @@ A set of examples for the [poppy-robot-client](https://github.com/nbarikipoulos/
 <!-- toc -->
 
 - [Usage](#usage)
-- [Basic examples](#basic-examples)
+- [Basic Examples](#basic-examples)
   * [basic.js](#basicjs)
   * [tetris.js](#tetrisjs)
   * [XmasTree.js](#xmastreejs)
-- [Other examples](#other-examples)
+- [Other Examples](#other-examples)
   * [Key Driven Poppy](#key-driven-poppy)
 
 <!-- tocstop -->
