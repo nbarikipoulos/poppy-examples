@@ -1,6 +1,6 @@
 # poppy-examples
 
-A set of examples for the [poppy-robot-client](https://github.com/nbarikipoulos/poppy-robot-client)
+A set of examples for the [poppy-robot-client](https://github.com/nbarikipoulos/poppy-robot-client) dedicated to the Poppy Ergo Jr.
 
 <!-- toc -->
 
