@@ -65,3 +65,11 @@ node key-driven-poppy/start
 then, type h to display available key binding and enjoy :)
 
 Users can easily register their own scripts modifying the keyBinding.js file.
+
+## Credits
+
+- Nicolas Barriquand ([nbarikipoulos](https://github.com/nbarikipoulos))
+
+## License
+
+- Code is MIT licensed. See [LICENSE](./LICENSE.md).
