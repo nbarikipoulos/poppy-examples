@@ -1,0 +1,25 @@
+{
+  "name": "poppy-examples",
+  "version": "3.0.0",
+  "description": "Example for poppy robot core/cli modules.",
+  "homepage": "https://github.com/nbarikipoulos/poppy-examples#readme",
+  "author": "Nicolas Barriquand <nicolas.barriquand@outlook.fr>",
+  "license": "MIT",
+  "keywords": [
+    "poppy",
+    "poppy-ergo-jr"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "poppy-robot-cli": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nbarikipoulos/poppy-examples.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nbarikipoulos/poppy-examples/issues"
+  }
+}
