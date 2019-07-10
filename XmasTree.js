@@ -1,8 +1,8 @@
-/*! Copyright (c) 2018 Nicolas Barriquand <nicolas.barriquand@outlook.fr>. MIT licensed. */
+/*! Copyright (c) 2018-2019 Nicolas Barriquand <nicolas.barriquand@outlook.fr>. MIT licensed. */
 
 'use strict'
 
-const P = require('poppy-robot-client');
+const P = require('poppy-robot-cli');
 
 // instantiate the poppy object here to access to the motor ids list
 let poppy = P.createPoppy();
