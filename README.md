@@ -1,5 +1,7 @@
 # poppy scripts examples
 
+[![Dependency Status][david-image]][david-url]
+
 A set of Scripts for the [poppy-robot-cli](https://github.com/nbarikipoulos/poppy-robot-cli)/[core](https://github.com/nbarikipoulos/poppy-robot-core) dedicated to the __Poppy Ergo Jr__.
 
 <!-- toc -->
@@ -83,3 +85,7 @@ Users can easily register their own scripts modifying the keyBinding.js file.
 ## License
 
 - Code is MIT licensed. See [LICENSE](./LICENSE.md).
+
+
+[david-image]: https://img.shields.io/david/nbarikipoulos/poppy-examples.svg
+[david-url]: https://david-dm.org/nbarikipoulos/poppy-examples
