@@ -109,6 +109,6 @@ scripts.push(end) // compliant to true
 // At last, execute the scripts
 // ////////////////////////////////////
 
-const poppy = P.createPoppy()
-
-poppy.exec(...scripts)
+P.createPoppy().then(poppy => {
+  poppy.exec(...scripts)
+})

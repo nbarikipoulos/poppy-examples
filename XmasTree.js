@@ -17,13 +17,29 @@ const led = [ // The led registry values
   'white'
 ]
 
-// Function which returns all motors ids of our robot
-const getAllMotors = _ => poppy.getAllMotorIds()
-
 // ////////////////////////////////////
 // Some utility functions
 // ////////////////////////////////////
 
+// here a led chaser behavior script :)
+const createLedChaser = (motors) => {
+  const script = P.createScript()
+
+  let index = 0
+  motors.forEach(motor => script // For each motor add to the ledChaser script the following instruction
+    .select(motor) // select the motor with id 'id' (sic)
+    .led(led[index++ % 7]) // why not?
+    .wait(200) // wait a little
+  )
+
+  motors.reverse().forEach(motor => script // reverse the motor ids array
+    .select(motor) // select the motor
+    .led('off') // turn off led
+    .wait(150) // wait a little
+  )
+
+  return script
+}
 // A function returning a blinking script
 const blink = (color, repeat = 5) => {
   const script = P.createScript('all')
@@ -70,23 +86,6 @@ tuples.forEach(tuple => toStablePosition // for each tuple in tuples, let add to
   .position(tuple[1], false) // a move to action (second one is the target positon)
 )
 
-// here a led chaser behavior script :)
-const ledChaser = P.createScript() // let create a new script
-
-let index = 0
-getAllMotors().forEach(id => ledChaser // For each motor add to the ledChaser script the following instruction
-  .select(id) // select the motor with id 'id' (sic)
-  .led(led[index++ % 7]) // why not?
-  .wait(200) // wait a little
-)
-
-getAllMotors().reverse() // reverse the motor ids array
-  .forEach(id => ledChaser // and then, from m6 to m1 (poppy ergo jr)
-    .select(id) // select the motor
-    .led('off') // turn off led
-    .wait(150) // wait a little
-  )
-
 // /////////////////////////
 // Our scripts
 // ////////////////////////////////////
@@ -117,9 +116,9 @@ tuples.forEach(tuple => mainMoveScript // for each tuple in pos, let add to main
 )
 mainMoveScript.wait(1000) // wait a little
 
-getAllMotors().reverse() // reverse the motor list...
-  .forEach(id => mainMoveScript // and turn off led (nice, isn't it??)
-    .select(id)
+tuples.reverse() // reverse the motor list...
+  .forEach(tuple => mainMoveScript // and turn off led (nice, isn't it??)
+    .select(tuple[0])
     .led('off')
     .wait(300)
   )
@@ -128,13 +127,17 @@ getAllMotors().reverse() // reverse the motor list...
 // At last, execute the scripts
 // ////////////////////////////////////
 
-poppy.exec(
-  init,
-  blink('blue'),
-  start,
-  ledChaser,
-  mainMoveScript,
-  toStablePosition,
-  ledChaser, // once again :)
-  end
-)
+P.createPoppy().then(poppy => {
+  const ledChaser = createLedChaser(poppy.getAllMotorIds())
+
+  poppy.exec(
+    init,
+    blink('blue'),
+    start,
+    ledChaser,
+    mainMoveScript,
+    toStablePosition,
+    ledChaser, // once again :)
+    end
+  )
+})

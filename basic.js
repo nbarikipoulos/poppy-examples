@@ -49,13 +49,13 @@ const end = P.createScript()
 // At last, execute the scripts
 // ////////////////////////////////////
 
-const poppy = P.createPoppy() // Instantiate a Poppy object
-
-poppy.exec(
-  init,
-  toPosition0,
-  openGrip, closeGrip,
-  openGrip, closeGrip, // let do it twice
-  toPosition1, // go to 'stable' rest position
-  end // 'free' the motors
-)
+P.createPoppy().then(poppy => {
+  poppy.exec(
+    init,
+    toPosition0,
+    openGrip, closeGrip,
+    openGrip, closeGrip, // let do it twice
+    toPosition1, // go to 'stable' rest position
+    end // 'free' the motors
+  )
+})
