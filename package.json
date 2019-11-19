@@ -1,6 +1,6 @@
 {
   "name": "poppy-examples",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Example for poppy robot core/cli modules.",
   "homepage": "https://github.com/nbarikipoulos/poppy-examples#readme",
   "author": "Nicolas Barriquand <nicolas.barriquand@outlook.fr>",
@@ -15,7 +15,7 @@
     "test": "standard"
   },
   "dependencies": {
-    "poppy-robot-cli": "4.0.0-beta.0"
+    "poppy-robot-cli": "^4.0.0"
   },
   "devDependencies": {
     "markdown-toc": "^1.2.0",
