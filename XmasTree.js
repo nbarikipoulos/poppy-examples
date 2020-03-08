@@ -98,7 +98,7 @@ const start = P.createScript('all')
 const mainMoveScript = P.createScript() // let create a new script
 
 tuples = [
-  ['m1', 60],
+  ['m1', -60],
   ['m2', -90],
   ['m3', 90],
   ['m4', 90],
