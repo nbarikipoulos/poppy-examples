@@ -4,9 +4,6 @@
 
 const P = require('poppy-robot-cli')
 
-// instantiate the poppy object here to access to the motor ids list
-const poppy = P.createPoppy()
-
 const led = [ // The led registry values
   'red',
   'green',
