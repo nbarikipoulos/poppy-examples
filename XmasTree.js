@@ -1,10 +1,10 @@
-/*! Copyright (c) 2018-2019 Nicolas Barriquand <nicolas.barriquand@outlook.fr>. MIT licensed. */
+/*! Copyright (c) 2018-2020 Nicolas Barriquand <nicolas.barriquand@outlook.fr>. MIT licensed. */
 
 'use strict'
 
 const P = require('poppy-robot-cli')
 
-const led = [ // The led registry values
+const led = [ // The led colors
   'red',
   'green',
   'blue',
@@ -79,19 +79,20 @@ let tuples = [ // let define an array of tuple (motor/target position)
 ]
 
 tuples.forEach(tuple => toStablePosition // for each tuple in tuples, let add to toStablePosition
-  .select(tuple[0]) // a select motor action (first element is the motor id)
-  .position(tuple[1], false) // a move to action (second one is the target positon)
+  .select(tuple[0]) // select motor
+  .position(tuple[1]) // "move to" action
 )
+toStablePosition.wait(1000)
 
 // /////////////////////////
 // Our scripts
 // ////////////////////////////////////
 
-// Script which will move all motors to the postion 0
+// Script that moves all motors to the postion 0
 const start = P.createScript('all')
-  .speed(50) // when moving all motor together, speed seems to be higher depending of the start position/load...
-  .position(0, false)
-  .wait(1500)
+  .speed(50)
+  .position(0)
+  .wait(2000)
   .speed(100)
 
 // a mvt
@@ -107,8 +108,8 @@ tuples = [
 ]
 
 tuples.forEach(tuple => mainMoveScript // for each tuple in pos, let add to mainMoveScript
-  .select(tuple[0]) // a select motor action (first element is the motor id)
-  .position(tuple[1]) // a move to action (second one is the target positon)
+  .select(tuple[0]) // a "select motor" action
+  .position(tuple[1], true) // a "move to" action
   .led('pink') // at last set the led color of motor
 )
 mainMoveScript.wait(1000) // wait a little

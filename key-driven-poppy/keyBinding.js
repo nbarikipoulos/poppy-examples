@@ -1,4 +1,4 @@
-/*! Copyright (c) 2018-2019 Nicolas Barriquand <nicolas.barriquand@outlook.fr>. MIT licensed. */
+/*! Copyright (c) 2018-2020 Nicolas Barriquand <nicolas.barriquand@outlook.fr>. MIT licensed. */
 
 'use strict'
 
@@ -23,20 +23,20 @@ module.exports = _ => {
 
 const KEYS = [{
   key: 't',
-  desc: 'Tetris position (sync)',
+  desc: 'Tetris position (sequentially moving motor)',
   script: _ => toTetris(true) // Call a function which provides the script
 }, {
   key: 'T',
-  desc: 'Tetris position (async)',
+  desc: 'Tetris position (simultaneously moving motor)',
   script: _ => toTetris(false)
 }, {
   key: 'z',
-  desc: 'All motors to 0 (sync)',
-  script: _ => P.createScript('all').position(0) // ... or directly write the script
+  desc: 'All motors to 0 (move motor sequentially)',
+  script: _ => P.createScript('all').position(0, true) // ... or directly write the script
 }, {
   key: 'Z',
-  desc: 'All motors to 0 (async)',
-  script: _ => P.createScript('all').position(0, false).wait(1000)
+  desc: 'All motors to 0 (simultaneously moving motor)',
+  script: _ => P.createScript('all').position(0).wait(1000)
 }, {
   key: 'o',
   desc: 'Open grip',
@@ -51,17 +51,17 @@ const KEYS = [{
 // Scripts
 // ////////////////////////////////////
 
-const toTetris = (sync) => P.createScript()
+const toTetris = (seq) => P.createScript()
   .select('m6')
-  .position(0, sync)
+  .position(0, seq)
   .select('m2')
-  .position(-90, sync)
+  .position(-90, seq)
   .select('m3')
-  .position(90, sync)
+  .position(90, seq)
   .select('m4')
-  .position(0, sync)
+  .position(0, seq)
   .select('m5')
-  .position(-90, sync)
+  .position(-90, seq)
   .select('m1')
-  .position(0, sync)
-  .wait(sync ? 0 : 1500)
+  .position(0, seq)
+  .wait(seq ? 0 : 1500)

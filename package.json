@@ -15,7 +15,7 @@
     "test": "standard"
   },
   "dependencies": {
-    "poppy-robot-cli": "^5.0.0"
+    "poppy-robot-cli": "^5.0.4-beta.1"
   },
   "devDependencies": {
     "markdown-toc": "^1.2.0",
