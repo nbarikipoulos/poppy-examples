@@ -53,9 +53,9 @@ A true beginner example introducing to script writing.
 A more 'real-life' case which demonstrates:
 
 - the sequencing of many scripts,
-- the synchronous/asynchronous call of actions.
+- the sequential/simultaneously movement of motors.
 
-The default release of this script is in asynchronous mode. Simply editing it and setting the variable named sync to true will set all the motions in synchronous mode.
+The default release of this script is in 'simultaneously move' mode. Simply editing it and setting the variable named 'seq' to true will set all the motions in sequential mode.
 
 ### XmasTree.js
 
