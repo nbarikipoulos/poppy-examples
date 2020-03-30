@@ -23,19 +23,19 @@ module.exports = _ => {
 
 const KEYS = [{
   key: 't',
-  desc: 'Tetris position (sequentially moving motor)',
+  desc: 'Tetris position (motor sequentially moved)',
   script: _ => toTetris(true) // Call a function which provides the script
 }, {
   key: 'T',
-  desc: 'Tetris position (simultaneously moving motor)',
+  desc: 'Tetris position (motor simultaneously moved)',
   script: _ => toTetris(false)
 }, {
   key: 'z',
-  desc: 'All motors to 0 (move motor sequentially)',
+  desc: 'All motors to 0 (motor sequentially moved)',
   script: _ => P.createScript('all').position(0, true) // ... or directly write the script
 }, {
   key: 'Z',
-  desc: 'All motors to 0 (simultaneously moving motor)',
+  desc: 'All motors to 0 (motor simultaneously moved)',
   script: _ => P.createScript('all').position(0).wait(1000)
 }, {
   key: 'o',
