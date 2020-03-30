@@ -67,7 +67,7 @@ const toTetris2 = P.createScript()
 // Let sequence the scripts to execute
 // ////////////////////////////////////
 
-// Array which handles and sequences all the scripts we
+// Array that handles and sequences all the scripts we
 // want to execute
 const scripts = []
 
