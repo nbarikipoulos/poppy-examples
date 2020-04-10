@@ -1,4 +1,4 @@
-/*! Copyright (c) 2018-2019 Nicolas Barriquand <nicolas.barriquand@outlook.fr>. MIT licensed. */
+/*! Copyright (c) 2018-2020 Nicolas Barriquand <nicolas.barriquand@outlook.fr>. MIT licensed. */
 
 'use strict'
 
@@ -19,8 +19,8 @@ const init = async _ => {
 
   await INSTANCE.exec(
     P.createScript('all')
-      .compliant(false)
       .speed(150)
+      .compliant(false)
   )
 }
 

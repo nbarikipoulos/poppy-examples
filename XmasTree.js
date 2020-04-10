@@ -58,8 +58,8 @@ const blink = (color, repeat = 5) => {
 // ////////////////////////////////////
 
 const init = P.createScript('all') // new script and all motor selected
+  .speed(100) // set speed to 100
   .compliant(false) // Switch motor to  the programmatically-drivable state
-  .speed(100) // set them a default speed
 
 const end = P.createScript('all') // new script and all motor selected
   .compliant(true) // Switch motor to 'rest' state
@@ -90,10 +90,8 @@ toStablePosition.wait(1000)
 
 // Script that moves all motors to the postion 0
 const start = P.createScript('all')
-  .speed(50)
   .position(0)
   .wait(2000)
-  .speed(100)
 
 // a mvt
 const mainMoveScript = P.createScript() // let create a new script

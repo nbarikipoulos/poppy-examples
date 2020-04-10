@@ -22,8 +22,8 @@ const moveMotor1To = (value, seq) => P.createScript()
 // ////////////////////////////////////
 
 const init = P.createScript('all')
-  .compliant(false)
   .speed(100)
+  .compliant(false)
 
 const end = P.createScript('all')
   .wait(seq ? 0 : 500) // in "parallel" mode, without wait, the compliant true instruction is exececuted too soon (i.e. before the end of all motor rotations)
