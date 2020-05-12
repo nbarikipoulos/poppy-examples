@@ -20,7 +20,7 @@ const init = async _ => {
   await INSTANCE.exec(
     P.createScript('all')
       .speed(150)
-      .compliant(false)
+      .stiff()
   )
 }
 
@@ -47,7 +47,7 @@ const keyListener = async (str, key) => {
   if ( // Exit
     key.ctrl && key.name === 'c'
   ) {
-    await execute(P.createScript('all').compliant(true))
+    await execute(P.createScript('all').compliant())
     console.log('See you soon.')
     process.exit()
   } else if ( // Help

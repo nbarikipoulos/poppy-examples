@@ -59,10 +59,10 @@ const blink = (color, repeat = 5) => {
 
 const init = P.createScript('all') // new script and all motor selected
   .speed(100) // set speed to 100
-  .compliant(false) // Switch motor to  the programmatically-drivable state
+  .stiff() // Switch motor to the programmatically-drivable state
 
 const end = P.createScript('all') // new script and all motor selected
-  .compliant(true) // Switch motor to 'rest' state
+  .compliant() // Switch motor to 'rest' state
   .led('off') // Turn off leds.
 
 // This create a motion to a 'stable' position in rest mode

@@ -23,11 +23,11 @@ const moveMotor1To = (value, seq) => P.createScript()
 
 const init = P.createScript('all')
   .speed(100)
-  .compliant(false)
+  .stiff()
 
 const end = P.createScript('all')
   .wait(seq ? 0 : 500) // in "parallel" mode, without wait, the compliant true instruction is exececuted too soon (i.e. before the end of all motor rotations)
-  .compliant(true)
+  .compliant()
 
 // ////////////////////////////////////
 // The 'tetris' Scripts

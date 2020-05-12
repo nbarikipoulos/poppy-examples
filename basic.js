@@ -11,7 +11,7 @@ const P = require('poppy-robot-cli')
 const init = P.createScript() // Create a new script
   .select('all') // select all motors
   .speed(100) // set speed to 100
-  .compliant(false) // make them "drivable"
+  .stiff() // make them programmtically "drivable"
 
 const toPosition0 = P.createScript() // Create a new script
   .select('all') // select all motors
@@ -44,7 +44,7 @@ const closeGrip = P.createScript() // Create a new script
 
 const end = P.createScript()
   .select('all') // select all motors
-  .compliant(true) // switch motors to the 'compliant' state
+  .compliant() // switch motors to the 'compliant' state
 
 // ////////////////////////////////////
 // At last, execute the scripts
