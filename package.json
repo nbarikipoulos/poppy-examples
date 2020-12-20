@@ -10,12 +10,11 @@
     "poppy-ergo-jr"
   ],
   "scripts": {
-    "gendoc": "$(npm bin)/markdown-toc -i README.md; echo",
-    "gendoc.win32": ".\\node_modules\\.bin\\markdown-toc -i README.md",
+    "gendoc": "markdown-toc -i README.md",
     "test": "standard"
   },
   "dependencies": {
-    "poppy-robot-cli": "^7.1.2"
+    "poppy-robot-cli": "^8.0.1"
   },
   "devDependencies": {
     "markdown-toc": "^1.2.0",

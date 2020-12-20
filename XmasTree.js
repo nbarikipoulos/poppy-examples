@@ -2,101 +2,28 @@
 
 'use strict'
 
-const P = require('poppy-robot-cli')
+const { createPoppy } = require('poppy-robot-cli')
 
-const led = [ // The led colors
-  'red',
-  'green',
-  'blue',
-  'yellow',
-  'cyan',
-  'pink',
-  'white'
-]
+const { init, end, wait } = require('./scripts/utils')
+const { moveMotor, restPosition } = require('./scripts/movements')
+const { ledChaser, blink } = require('./scripts/led')
 
-// ////////////////////////////////////
-// Some utility functions
-// ////////////////////////////////////
-
-// here a led chaser behavior script :)
-const createLedChaser = (motors) => {
-  const script = P.createScript()
-
-  let index = 0
-  motors.forEach(motor => script // For each motor add to the ledChaser script the following instruction
-    .select(motor) // select the motor with id 'id' (sic)
-    .led(led[index++ % 7]) // why not?
-    .wait(200) // wait a little
-  )
-
-  motors.reverse().forEach(motor => script // reverse the motor ids array
-    .select(motor) // select the motor
-    .led('off') // turn off led
-    .wait(150) // wait a little
-  )
-
-  return script
-}
-// A function returning a blinking script
-const blink = (color, repeat = 5) => {
-  const script = P.createScript('all')
-    .select('all')
-
-  const delay = 200 // it does not look nice with lower value
-
-  for (let i = 0; i < repeat; i++) {
-    script.led(color)
-      .wait(delay)
-      .led('off')
-      .wait(delay)
-  }
-  return script
-}
-
-// ////////////////////////////////////
-// Some utility scripts
-// ////////////////////////////////////
-
-const init = P.createScript('all') // new script and all motor selected
-  .speed(100) // set speed to 100
-  .stiff() // Switch motor to the programmatically-drivable state
-
-const end = P.createScript('all') // new script and all motor selected
-  .compliant() // Switch motor to 'rest' state
-  .led('off') // Turn off leds.
-
-// This create a motion to a 'stable' position in rest mode
-// i.e. 'freeing' motor i.e. switch their compliant states to true
-const toStablePosition = P.createScript() // Create a new script
-
-let tuples = [ // let define an array of tuple (motor/target position)
-  ['m2', -90],
-  ['m3', 90],
-  ['m4', 0],
-  ['m5', -90],
-  ['m6', 0],
-  ['m1', 0]
-]
-
-tuples.forEach(tuple => toStablePosition // for each tuple in tuples, let add to toStablePosition
-  .select(tuple[0]) // select motor
-  .position(tuple[1]) // "move to" action
-)
-toStablePosition.wait(1000)
+const speed = 150
 
 // /////////////////////////
-// Our scripts
+// Scripts
 // ////////////////////////////////////
 
+const toStablePosition = [
+  moveMotor('m1', 0),
+  restPosition(), wait(1000)
+]
+
 // Script that moves all motors to the postion 0
-const start = P.createScript('all')
-  .position(0)
-  .wait(2000)
+const start = moveMotor('all', 0).wait(2000)
 
-// a mvt
-const mainMoveScript = P.createScript() // let create a new script
-
-tuples = [
+// "Main" mvt
+const tuples = [
   ['m1', -60],
   ['m2', -90],
   ['m3', 90],
@@ -105,35 +32,29 @@ tuples = [
   ['m6', 90]
 ]
 
-tuples.forEach(tuple => mainMoveScript // for each tuple in pos, let add to mainMoveScript
-  .select(tuple[0]) // a "select motor" action
-  .position(tuple[1], true) // a "move to" action
-  .led('pink') // at last set the led color of motor
+const mainMoveScript = [].concat(
+  tuples.map(tuple => moveMotor(...tuple, true).led('cyan')),
+  wait(1000),
+  tuples.reverse().map(tuple => moveMotor(tuple[0], 0, true).led('off'))
 )
-mainMoveScript.wait(1000) // wait a little
-
-tuples.reverse() // reverse the motor list...
-  .forEach(tuple => mainMoveScript // and turn off led (nice, isn't it??)
-    .select(tuple[0])
-    .led('off')
-    .wait(300)
-  )
 
 // ////////////////////////////////////
 // At last, execute the scripts
 // ////////////////////////////////////
 
-P.createPoppy().then(poppy => {
-  const ledChaser = createLedChaser(poppy.getAllMotorIds())
+createPoppy().then(poppy => {
+  const motors = poppy.getAllMotorIds()
+  const lChaser = ledChaser(motors)
 
   poppy.exec(
-    init,
-    blink('blue'),
+    init(speed),
+    blink(),
+    toStablePosition,
     start,
-    ledChaser,
+    lChaser,
     mainMoveScript,
     toStablePosition,
-    ledChaser, // once again :)
-    end
+    lChaser, // once again :)
+    end()
   )
 })

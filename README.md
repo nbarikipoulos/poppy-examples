@@ -57,10 +57,11 @@ A more 'real-life' case which demonstrates:
 
 The default release of this script is in 'simultaneously move' mode. Simply editing it and setting the variable named 'seq' to true will set all the motions in sequential mode.
 
+It aims to demonstrate how to (efficiently enough) write scripts in a concise manner.
+
 ### XmasTree.js
 
-The led hell :).
-It demonstrates how to (efficiently enough) write scripts in a concise manner.
+The led hell :)
 
 ## Other Examples
 
@@ -74,7 +75,7 @@ Type:
 node key-driven-poppy/start
 ````
 
-then, type h to display available key binding and enjoy :)
+then, type h to display available key binding and enjoy 🙂.
 
 Users can easily register their own scripts modifying the keyBinding.js file.
 
