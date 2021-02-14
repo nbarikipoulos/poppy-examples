@@ -43,7 +43,7 @@ const mainMoveScript = [].concat(
 // ////////////////////////////////////
 
 createPoppy().then(poppy => {
-  const motors = poppy.getAllMotorIds()
+  const motors = poppy.allMotorIds
   const lChaser = ledChaser(motors)
 
   poppy.exec(
