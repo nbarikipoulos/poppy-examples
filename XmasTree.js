@@ -1,4 +1,4 @@
-/*! Copyright (c) 2018-2020 Nicolas Barriquand <nicolas.barriquand@outlook.fr>. MIT licensed. */
+/*! Copyright (c) 2018-2021 Nicolas Barriquand <nicolas.barriquand@outlook.fr>. MIT licensed. */
 
 'use strict'
 
@@ -43,7 +43,7 @@ const mainMoveScript = [].concat(
 // ////////////////////////////////////
 
 createPoppy().then(poppy => {
-  const motors = poppy.getAllMotorIds()
+  const motors = poppy.allMotorIds
   const lChaser = ledChaser(motors)
 
   poppy.exec(
