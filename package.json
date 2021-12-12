@@ -1,6 +1,6 @@
 {
   "name": "poppy-examples",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "description": "Examples for poppy robot core/cli modules.",
   "homepage": "https://github.com/nbarikipoulos/poppy-examples#readme",
   "author": "Nicolas Barriquand <nicolas.barriquand@outlook.fr>",
