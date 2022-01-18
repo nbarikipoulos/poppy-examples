@@ -19,7 +19,7 @@ A set of example scripts based on the [poppy-robot-cli](https://github.com/nbari
 
 ## Prerequisite
 
-__This module requires Poppy software ^v3.0.0__ installed on robot.
+These examples requires the Poppy software ^v4.0.0 installed on robot.
 
 ## Install
 
