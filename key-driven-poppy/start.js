@@ -1,5 +1,3 @@
-/*! Copyright (c) 2018-2020 Nicolas Barriquand <nicolas.barriquand@outlook.fr>. MIT licensed. */
-
 'use strict'
 
 const readline = require('readline')

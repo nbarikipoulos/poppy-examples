@@ -1,5 +1,3 @@
-/*! Copyright (c) 2018-2020 Nicolas Barriquand <nicolas.barriquand@outlook.fr>. MIT licensed. */
-
 'use strict'
 
 const { createPoppy } = require('poppy-robot-cli')
@@ -12,7 +10,7 @@ const { moveMotors, restPosition } = require('./scripts/movements')
 const seq = false
 const speed = 100 // Speed of motors
 
-// duration used in scripts belows are calibrates for speed set to 100
+// duration used in scripts belows are calibrates for speed of motors set to 100
 const duration = (t100) => Math.trunc(t100 * 100 / speed)
 
 // ////////////////////////////////////
