@@ -2,14 +2,14 @@
 
 const { createScript } = require('poppy-robot-cli')
 
-const moveMotor = (motor, position, wait = false) => createScript(motor).position(position, wait)
+const moveMotor = (motor, position, wait = false) => createScript(motor).goto(position, wait)
 
 const moveMotors = (...values) => {
   const script = createScript()
 
   for (const v of values) {
     const motors = Array.isArray(v.motors) ? v.motors : [v.motors]
-    script.select(...motors).position(v.position, v.wait || false)
+    script.select(...motors).goto(v.position, v.wait || false)
   }
 
   return script

@@ -20,12 +20,12 @@ module.exports = _ => {
 // ////////////////////////////////////
 
 const toTetris = (seq) => createScript()
-  .select('m6').position(0, seq)
-  .select('m2').position(-90, seq)
-  .select('m3').position(90, seq)
-  .select('m4').position(0, seq)
-  .select('m5').position(-90, seq)
-  .select('m1').position(0, seq)
+  .select('m6').goto(0, seq)
+  .select('m2').goto(-90, seq)
+  .select('m3').goto(90, seq)
+  .select('m4').goto(0, seq)
+  .select('m5').goto(-90, seq)
+  .select('m1').goto(0, seq)
   .wait(seq ? 0 : 1500)
 
 // ////////////////////////////////////
@@ -43,17 +43,17 @@ const KEYS = [{
 }, {
   key: 'z',
   desc: 'All motors to 0 (motor sequentially moved)',
-  script: createScript('all').position(0, true) // ... or directly write the script
+  script: createScript('all').goto(0, true) // ... or directly write the script
 }, {
   key: 'Z',
   desc: 'All motors to 0 (motor simultaneously moved)',
-  script: createScript('all').position(0).wait(1000)
+  script: createScript('all').goto(0).wait(1000)
 }, {
   key: 'o',
   desc: 'Open grip',
-  script: createScript('m6').position(90)
+  script: createScript('m6').goto(90)
 }, {
   key: 'c',
   desc: 'close grip',
-  script: createScript('m6').position(0)
+  script: createScript('m6').goto(0)
 }]
