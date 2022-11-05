@@ -1,90 +1,61 @@
 'use strict'
 
-const { createPoppy } = require('poppy-robot-cli')
+const { createPoppy, createScript } = require('poppy-robot-cli')
+const parseArgs = require('minimist')
 
-const { init, end, wait } = require('./scripts/utils')
-const { moveMotors, restPosition } = require('./scripts/movements')
+const argv = parseArgs(process.argv.slice(2))
 
-// seq = false => Request to move (position/rotation) are send to the robot and it does not wait the end of the movement to process next instruction
-// seq = true => sequential: once move instruction is send to motor, it awaits the end of the motor move until processing next step
-const seq = false
-const speed = 100 // Speed of motors
-
-// duration used in scripts belows are calibrates for speed of motors set to 100
-const duration = (t100) => Math.trunc(t100 * 100 / speed)
+const dt = argv._[0] ?? 1
 
 // ////////////////////////////////////
-// Scripts
+// Move m1/other motors by steps of dt
+// Steps of the script
+// 0/ (---) initialisation,
+// 1/ (dt) all motors to positions 0
+// ith/ (dt) m1 => rotation
+//           in the same times move others motors
+// last/ (---) back to rest position, release the motors
 // ////////////////////////////////////
 
-const start = init(speed) // Set speed and switch all motors to stiff state
-const finish = [
-  wait(seq ? 0 : duration(750)), // avoid to send the compliant instruction too soon
-  end()
+const start = createScript('all').stiff()
+const end = createScript('all').compliant()
+
+// Move m1/other motors by steps of dt
+const ith = (
+  pos1, // Target position for m1
+  {
+    motors = ['m2', 'm3', 'm4', 'm5', 'm6'], // others motors: Default is all others
+    positions = [-90, 90, 0, -90, -90], // target positions: Default is rest-like position
+    duration = dt
+  } = {}
+) => createScript('m1')
+  .goto(pos1, duration)
+  .select(motors)
+  .goto(positions, duration, true)
+
+// ////////////////////////////////////
+// Let's create the scripts to execute
+// ////////////////////////////////////
+
+const scripts = [
+  ith(0, { positions: 0 }),
+  ith(90, { positions: [-90, 0, -90, 90, 0] }),
+  ith(-90, { motors: 'm4', positions: 90 }),
+  ith(0, { positions: [90, 90, 90, 90, -90] }),
+  ith(-90, { motors: 'm2', positions: -90 }),
+  ith(90, { positions: [0, 0, 0, 90, 0] }),
+  ith(-90, { positions: [-90, 90, 90, 90, -90] }),
+  ith(0)
 ]
 
-// Function which returns a script moving the motor m1 to the position 'value' (async)
-const moveMotor1To = (position) => moveMotors(
-  { motors: 'm1', position }
-)
-
-//
-// a 'store' of movements
-//
-const movements = [{
-  name: 'allMotorsToZero',
-  script: moveMotors({ motors: 'all', position: 0, wait: seq }),
-  t100: 3000 // ref with speed set to 100
-}, {
-  name: 'toRestPosition',
-  script: restPosition(seq),
-  t100: 1000
-}, {
-  name: 'toTetris1',
-  script: moveMotors(
-    { motors: ['m2', 'm3'], position: 0, wait: seq },
-    { motors: ['m4', 'm5'], position: 90, wait: seq }
-  ),
-  t100: 2500
-}, {
-  name: 'toTetris2',
-  script: moveMotors(
-    { motors: 'm2', position: -90, wait: seq },
-    { motors: 'm4', position: 0, wait: seq }
-  ),
-  t100: 1800
-}]
-
-const get = (name) => movements.find(elt => elt.name === name)
-
 // ////////////////////////////////////
-// Let group the scripts to execute
+// At last, execute the scripts
 // ////////////////////////////////////
-
-const x = [ // tuple (position for m1, script to execute on other motors)
-  [0, 'allMotorsToZero'],
-  [90, 'toRestPosition'],
-  [-90, 'toTetris1'],
-  [90, 'toTetris2'],
-  [0, 'toRestPosition']
-]
-
-const scripts = []
-
-for (const [pos, name] of x) {
-  const mvt = get(name)
-
-  scripts.push(
-    moveMotor1To(pos), // Independently move m1 (async)
-    mvt.script, // Script for other motors
-    wait(seq ? 0 : duration(mvt.t100)) // In "async" movement, wait end of mvt
-  )
-}
 
 createPoppy().then(poppy => {
   poppy.exec(
     start,
     scripts,
-    finish
+    end
   )
 })

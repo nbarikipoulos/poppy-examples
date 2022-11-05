@@ -1,64 +1,44 @@
 'use strict'
 
 const { createScript, createPoppy } = require('poppy-robot-cli')
+const parseArgs = require('minimist')
+
+const argv = parseArgs(process.argv.slice(2))
+
+const duration = argv._[0] ?? 5
 
 // ////////////////////////////////////
-// Scripts
+// Steps of the script
+// 0/ (---) initialisation
+// 1/ (t/5) Move all motors to 0
+// 2/ (t/5) m1 to -120, others to rest-like position
+// 3/ (2t/5) m1 to 120, others to 0
+// 4/ (t/5) m1 to 0, others to rest-like position
+// 5/ (---) release the motors
 // ////////////////////////////////////
 
-const speed = 100
+// Rest-like positions for 'm2', 'm3', 'm4', 'm5', 'm6'
+const rest = [-90, 90, 0, -90, -90]
 
-const init = createScript() // Create a new script
-  .select('all') // select all motors
-  .speed(speed) // set speed
-  .stiff() // make them programmtically "drivable"
+const dt = duration / 5.0
 
-const toPosition0 = createScript() // Create a new script
-  .select('all') // select all motors
-  .goto(0, true) // sequentially move all motor to the position 0
-  // i.e. we execute this instruction awaiting that
-  // each motor reachs its target position before next instruction
-
-// This position is a 'stable' rest position when 'freeing' motor i.e. switching their
-// compliant states to true
-const toPosition1 = createScript() // Create a new script
-  .select('m2') // select the motor m2
-  .goto(-90) // move it to the position -90 degrees
-  .select('m3') // select the motor m3
-  .goto(90) // ...
-  .select('m4')
-  .goto(0)
-  .select('m5')
-  .goto(-90)
-  .select('m1')
-  .goto(0)
-  .wait(Math.trunc(1500 * 100 / speed)) // 1500ms for speed set to 100
-
-const openGrip = createScript() // Create a new script
-  .select('m6') // select the 'm6' motor
-  .goto(90, true) // "open" it and await the end of the rotation
-
-const closeGrip = createScript() // Create a new script
-  .select('m6') // select the 'm6' motor
-  .goto(0, true) // "close" it, and await end of the rootation
-
-const openClose = [openGrip, closeGrip]
-
-const end = createScript()
-  .select('all') // select all motors
-  .compliant() // switch motors to the 'compliant' state
+const script = createScript() // Create a new script
+  .select('all') // Step 0
+  .stiff()
+  .goto(0, dt, true) // Step 1
+  .goto([120].concat(rest), dt, true) // Step 2
+  .select('m1') // Step 3
+  .goto(-120, 2 * dt)
+  .select('m2', 'm3', 'm4', 'm5', 'm6')
+  .goto(0, 2 * dt, true)
+  .select('all') // Step 4
+  .goto([0].concat(rest), dt, true)
+  .compliant() // Step 5
 
 // ////////////////////////////////////
-// At last, execute the scripts
+// At last, execute the script
 // ////////////////////////////////////
 
 createPoppy().then(poppy => {
-  poppy.exec(
-    init,
-    toPosition0,
-    openClose,
-    openClose, // let do it twice
-    toPosition1, // go to 'stable' rest position
-    end // 'free' the motors
-  )
+  poppy.exec(script)
 })

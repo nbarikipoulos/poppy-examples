@@ -2,22 +2,30 @@
 
 const { createScript } = require('poppy-robot-cli')
 
-// here a led chaser behavior script :)
-const ledChaser = (motors, reverse = true) => {
+// Led chaser script
+const ledChaser = (
+  motors,
+  fn = _ => shake(), // _ => ['cyan']
+  reverse = true
+) => {
   const script = createScript()
 
-  let index = 0
-  motors.forEach(motor => script
+  const dt = 0.2
+
+  const colors = fn()
+  const size = colors.length
+
+  motors.forEach((motor, i) => script
     .select(motor)
-    .led(LED[index++ % 7])
-    .wait(200)
+    .led(colors[i % size])
+    .wait(dt)
   )
 
   if (reverse) {
-    motors.reverse().forEach(motor => script // reverse the motor ids array
-      .select(motor) // select the motor
-      .led('off') // turn off led
-      .wait(150) // wait a little
+    [...motors].reverse().forEach(motor => script
+      .select(motor)
+      .led('off')
+      .wait(dt)
     )
   }
 
@@ -26,16 +34,33 @@ const ledChaser = (motors, reverse = true) => {
 
 // A function returning a blinking script
 const blink = (motors = 'all', {
-  repeat = 5,
-  delay = 300,
+  repeat = 2,
+  delay = 0.3,
   color = 'green'
 } = {}) => {
   const script = createScript(motors).led(color)
-    .wait(0.8 * delay)
+    .wait(delay)
     .led('off')
-    .wait(1.2 * delay)
+    .wait(delay)
 
   return Array(repeat).fill(script)
+}
+
+const shake = _ => {
+  const result = []
+
+  const colors = [...LED]
+
+  while (colors.length) {
+    const idx = Math.floor(Math.random() * (colors.length - 1))
+    const color = colors[idx]
+    if (color !== 'red') {
+      result.push(colors[idx])
+    }
+    colors.splice(idx, 1)
+  }
+
+  return result
 }
 
 const LED = [ // The led colors
@@ -56,6 +81,5 @@ const LED = [ // The led colors
 
 module.exports = {
   ledChaser,
-  blink,
-  LED
+  blink
 }

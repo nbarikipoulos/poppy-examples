@@ -1,6 +1,6 @@
 {
   "name": "poppy-examples",
-  "version": "7.1.0",
+  "version": "8.0.0",
   "description": "Examples for poppy robot core/cli modules.",
   "homepage": "https://github.com/nbarikipoulos/poppy-examples#readme",
   "author": "Nicolas Barriquand <nicolas.barriquand@outlook.fr>",
@@ -15,10 +15,10 @@
     "test": "npm run lint"
   },
   "dependencies": {
-    "poppy-robot-cli": "^10.0.0"
+    "minimist": "^1.2.7",
+    "poppy-robot-cli": "^11.1.0"
   },
   "devDependencies": {
-    "markdown-toc": "^1.2.0",
     "standard": "*"
   },
   "repository": {
